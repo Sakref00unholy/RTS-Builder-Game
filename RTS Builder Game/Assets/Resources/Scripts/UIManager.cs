@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
             _buildingButtons[data.code] = b;
             _AddBuildingButtonListener(b, i);
             button.transform.SetParent(buildingMenu);
-            _buildingButtons[data.unitName] = b;
+            
             if (!Globals.BUILDING_DATA[i].CanBuy())
             {
                 b.interactable = false;
