@@ -43,9 +43,10 @@ public class UIManager : MonoBehaviour
             button.name = data.unitName;
             button.transform.Find("Text").GetComponent<Text>().text = data.unitName;
             Button b = button.GetComponent<Button>();
+            _buildingButtons[data.code] = b;
             _AddBuildingButtonListener(b, i);
             button.transform.SetParent(buildingMenu);
-            _buildingButtons[data.code] = b;
+            _buildingButtons[data.unitName] = b;
             if (!Globals.BUILDING_DATA[i].CanBuy())
             {
                 b.interactable = false;
