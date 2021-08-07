@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7583f4cbfef014342bd20272b9f32fc4, type: 3}
+  m_Name: House
+  m_EditorClassIdentifier: 
+  code: house
+  unitName: House
+  healthpoints: 100
+  prefab: {fileID: 6779945869183788930, guid: eb4ec04a3c82b5142b87cfed2d1cf3b6, type: 3}
+  cost:
+  - code: gold
+    amount: 100
+  - code: wood
+    amount: 120

@@ -3,7 +3,13 @@ guid: 47e7f2a1ccddc8a4c81e4a8c31f45534
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - buildingMenu: {instanceID: 0}
+  - buildingButtonPrefab: {fileID: 3913468863353621223, guid: 4d01e253d1a05cd429786983820fb1e7,
+      type: 3}
+  - resourcesUIParent: {instanceID: 0}
+  - gameResourceDisplayPrefab: {fileID: 6574195349100471009, guid: 942784f389ac4f24e93fcc3bf40f46e8,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

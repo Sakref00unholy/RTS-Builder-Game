@@ -38,15 +38,14 @@ public class UIManager : MonoBehaviour
         _buildingButtons = new Dictionary<string, Button>();
         for (int i = 0; i < Globals.BUILDING_DATA.Length; i++)
         {
-            
+            BuildingData data = Globals.BUILDING_DATA[i];
             GameObject button = Instantiate(buildingButtonPrefab);
-            string code = Globals.BUILDING_DATA[i].Code;
-            button.name = code;
-            button.transform.Find("Text").GetComponent<Text>().text = code;
+            button.name = data.unitName;
+            button.transform.Find("Text").GetComponent<Text>().text = data.unitName;
             Button b = button.GetComponent<Button>();
             _AddBuildingButtonListener(b, i);
             button.transform.SetParent(buildingMenu);
-            _buildingButtons[code] = b;
+            _buildingButtons[data.code] = b;
             if (!Globals.BUILDING_DATA[i].CanBuy())
             {
                 b.interactable = false;
@@ -58,7 +57,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (BuildingData data in Globals.BUILDING_DATA)
         {
-            _buildingButtons[data.Code].interactable = data.CanBuy();
+            _buildingButtons[data.code].interactable = data.CanBuy();
         }
     }
 
@@ -82,13 +81,13 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.AddListener("UpdateResourceTexts", _OnUpdateResourceTexts);
-        EventManager.AddListener("CheckBuildingButttons", _OnCheckBuildingButtons);
+        EventManager.AddListener("CheckBuildingButtons", _OnCheckBuildingButtons);
 
     }
     private void OnDisable()
     {
         EventManager.RemoveListener("UpdateResourceTexts", _OnUpdateResourceTexts);
-        EventManager.RemoveListener("CheckBuildingButttons", _OnCheckBuildingButtons);
+        EventManager.RemoveListener("CheckBuildingButtons", _OnCheckBuildingButtons);
 
     }
     private void _OnUpdateResourceTexts()
@@ -100,7 +99,7 @@ public class UIManager : MonoBehaviour
     {
        foreach (BuildingData data in Globals.BUILDING_DATA)
             {
-                _buildingButtons[data.Code].interactable = data.CanBuy();
+                _buildingButtons[data.code].interactable = data.CanBuy();
             } 
 
     }

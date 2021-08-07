@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 [RequireComponent(typeof(BoxCollider))]
-public class BuildingManager : MonoBehaviour
+public class BuildingManager : UnitManager
 {
     private BoxCollider _collider;
 
@@ -74,6 +74,10 @@ public class BuildingManager : MonoBehaviour
                 invalidCornersCount++;
         }
         return invalidCornersCount < 3;
+    }
+    protected override bool IsActive()
+    {
+        return _building.IsFixed;
     }
 
 }
