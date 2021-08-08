@@ -20,6 +20,8 @@ public class Building
         _data = data;
         _currentHealth = data.healthpoints;
 
+        _buildingManager = _transform.GetComponent<BuildingManager>();
+
         GameObject g = GameObject.Instantiate(data.prefab) as GameObject;
         _transform = g.transform;
 
@@ -29,7 +31,6 @@ public class Building
             _materials.Add(new Material(material));
         }
         // (set the materials to match the "valid" initial state)
-        _buildingManager = g.GetComponent<BuildingManager>();
         _placement = BuildingPlacement.VALID;
         SetMaterials();
     }

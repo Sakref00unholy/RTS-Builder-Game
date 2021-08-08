@@ -131,10 +131,10 @@ GameObject:
   m_Component:
   - component: {fileID: 208043518}
   - component: {fileID: 208043517}
-  - component: {fileID: 208043519}
-  - component: {fileID: 208043520}
-  - component: {fileID: 208043522}
   - component: {fileID: 208043523}
+  - component: {fileID: 208043519}
+  - component: {fileID: 208043522}
+  - component: {fileID: 208043520}
   m_Layer: 0
   m_Name: GAME
   m_TagString: Untagged

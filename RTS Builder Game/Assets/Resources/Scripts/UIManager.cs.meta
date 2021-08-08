@@ -10,7 +10,7 @@ MonoImporter:
   - resourcesUIParent: {instanceID: 0}
   - gameResourceDisplayPrefab: {fileID: 6574195349100471009, guid: 942784f389ac4f24e93fcc3bf40f46e8,
       type: 3}
-  executionOrder: 0
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
