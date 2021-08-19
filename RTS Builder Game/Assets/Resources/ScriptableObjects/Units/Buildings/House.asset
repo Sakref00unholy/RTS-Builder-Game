@@ -21,3 +21,5 @@ MonoBehaviour:
     amount: 100
   - code: wood
     amount: 120
+  - code: stone
+    amount: 120

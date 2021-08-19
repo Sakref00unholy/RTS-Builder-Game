@@ -30,7 +30,7 @@ public class Building
         {
             _materials.Add(new Material(material));
         }
-        // (set the materials to match the "valid" initial state)
+
         _placement = BuildingPlacement.VALID;
         SetMaterials();
     }
