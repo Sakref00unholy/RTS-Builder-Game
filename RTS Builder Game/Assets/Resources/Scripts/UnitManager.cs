@@ -7,6 +7,13 @@ public class UnitManager : MonoBehaviour
     public GameObject selectionCircle;
 
     private bool _hovered = false;
+    private Transform _canvas;
+    private GameObject _healthbar;
+
+    private void Awake()
+    {
+        _canvas = GameObject.Find("Canvas").transform;
+    }
 
     private void OnMouseEnter()
     {
@@ -35,9 +42,20 @@ public class UnitManager : MonoBehaviour
 
     private void _SelectUtil()
     {
-        if (Globals.SELECTED_UNITS.Contains(this)) return;
         Globals.SELECTED_UNITS.Add(this);
         selectionCircle.SetActive(true);
+        if (_healthbar == null)
+        {
+            _healthbar = GameObject.Instantiate(Resources.Load("Prefabs/UI/Healthbar")) as GameObject;
+            _healthbar.transform.SetParent(_canvas);
+            Healthbar h = _healthbar.GetComponent<Healthbar>();
+            Rect boundingBox = Utils.GetBoundingBoxOnScreen(
+                transform.Find("Mesh").GetComponent<Renderer>().bounds,
+                Camera.main
+            );
+            h.Initialize(transform, boundingBox.height);
+            h.SetPosition();
+        }
     }
 
     public void Select() { Select(false, false); }
@@ -71,9 +89,11 @@ public class UnitManager : MonoBehaviour
 
     public void Deselect()
     {
-        if (!Globals.SELECTED_UNITS.Contains(this)) return;
+       // if (!Globals.SELECTED_UNITS.Contains(this)) return;
         Globals.SELECTED_UNITS.Remove(this);
         selectionCircle.SetActive(false);
+        Destroy(_healthbar);
+        _healthbar = null;
 
     }
 }

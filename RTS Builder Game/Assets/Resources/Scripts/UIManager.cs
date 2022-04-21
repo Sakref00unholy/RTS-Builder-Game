@@ -13,12 +13,21 @@ public class UIManager : MonoBehaviour
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
 
+    public GameObject infoPanel;
+    private Text _infoPanelTitleText;
+    private Text _infoPanelDescriptionText;
+    private Transform _infoPanelResourcesCostParent;
+
     private Dictionary<string, Text> _resourceTexts;
     private Dictionary<string, Button> _buildingButtons;
 
 
     private void Awake()
     {
+        Transform infoPanelTransform = infoPanel.transform;
+        _infoPanelTitleText = infoPanelTransform.Find("Content/Title").GetComponent<Text>();
+        _infoPanelDescriptionText = infoPanelTransform.Find("Content/Description").GetComponent<Text>();
+        _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
         //create texts for each in-game resource (gold, wood, stone...)
         _resourceTexts = new Dictionary<string, Text>();
         foreach (KeyValuePair<string, GameResource> pair in Globals.GAME_RESOURCES)
@@ -28,6 +37,7 @@ public class UIManager : MonoBehaviour
             _resourceTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
             _SetResourceText(pair.Key, pair.Value.Amount);
             display.transform.SetParent(resourcesUIParent);
+
         }
 
 
@@ -46,12 +56,14 @@ public class UIManager : MonoBehaviour
             _buildingButtons[data.code] = b;
             _AddBuildingButtonListener(b, i);
             button.transform.SetParent(buildingMenu);
-            
+            button.GetComponent<BuildingButton>().Initialize(Globals.BUILDING_DATA[i]);
+
             if (!Globals.BUILDING_DATA[i].CanBuy())
             {
                 b.interactable = false;
             }
         }
+        _ShowInfoPanel(false);
     }
    
     public void CheckBuildingButtons()
@@ -83,12 +95,16 @@ public class UIManager : MonoBehaviour
     {
         EventManager.AddListener("UpdateResourceTexts", _OnUpdateResourceTexts);
         EventManager.AddListener("CheckBuildingButtons", _OnCheckBuildingButtons);
+        EventManager.AddTypedListener("HoverBuildingButton", _OnHoverBuildingButton);
+        EventManager.AddListener("UnhoverBuildingButton", _OnUnhoverBuildingButton);
 
     }
     private void OnDisable()
     {
         EventManager.RemoveListener("UpdateResourceTexts", _OnUpdateResourceTexts);
         EventManager.RemoveListener("CheckBuildingButtons", _OnCheckBuildingButtons);
+        EventManager.RemoveTypedListener("HoverBuildingButton", _OnHoverBuildingButton);
+        EventManager.RemoveListener("UnhoverBuildingButton", _OnUnhoverBuildingButton);
 
     }
     private void _OnUpdateResourceTexts()
@@ -104,6 +120,30 @@ public class UIManager : MonoBehaviour
             } 
 
     }
+    public void _SetInfoPanel(BuildingData data)
+    {
+        // update texts
+        if (data.Code != "") _infoPanelTitleText.text = data.Code;
+        if (data.Description != "") _infoPanelDescriptionText.text = data.Description;
+        // clear resource costs and reinstantiate new ones
+        foreach (Transform child in _infoPanelResourcesCostParent) Destroy(child.gameObject);
+        if (data.Cost.Count > 0)
+        {
+            GameObject g; Transform t;
+            foreach (ResourceValue resource in data.Cost)
+            {
+                g = Instantiate(GameResourceCost) as GameObject;
+                t = g.transform;
+                t.Find("Text").GetComponent<Text>().text = resource.amount.ToString();
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+                t.SetParent(_infoPanelResourcesCostParent);
+            }
+        }
+    }
 
-    
+    public void _ShowInfoPanel(bool show)
+    {
+        infoPanel.SetActive(show);
+    }
+
 }

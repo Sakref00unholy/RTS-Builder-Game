@@ -20,11 +20,11 @@ public class Building
         _data = data;
         _currentHealth = data.healthpoints;
 
-        _buildingManager = _transform.GetComponent<BuildingManager>();
+        
 
         GameObject g = GameObject.Instantiate(data.prefab) as GameObject;
         _transform = g.transform;
-
+        _buildingManager = _transform.GetComponent<BuildingManager>();
         _materials = new List<Material>();
         foreach (Material material in _transform.Find("Mesh").GetComponent<Renderer>().materials)
         {
